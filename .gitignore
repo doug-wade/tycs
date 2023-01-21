@@ -56,3 +56,9 @@ profile-*
 profile*
 *clinic*
 *flamegraph*
+
+# tybalt build
+dist/
+
+# npm tools
+package-lock.json
