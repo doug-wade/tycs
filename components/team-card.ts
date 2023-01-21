@@ -1,12 +1,28 @@
 import { defineComponent, html } from "@tybalt/core";
-import { from } from "rxjs";
+import { required } from "@tybalt/validator";
+import { distinctUntilChanged, switchMap, map, filter } from "rxjs";
 
 defineComponent({
   name: "tycs-team-card",
-  render({ payload }) {
-    return html` <div>${payload}</div> `;
+  props: {
+    teamid: {
+      validator: required(),
+    },
   },
-  setup() {
-    return { payload: from(fetch("/api/team/1")) };
+  render({ payload }) {
+    return html`<div>${payload}</div>`;
+  },
+  setup({ teamid }) {
+    const payload = teamid.pipe(
+      filter((value) => !!value),
+      distinctUntilChanged(),
+      switchMap((value) => {
+        return fetch(`/api/get-team/${value}`).then((response) =>
+          response.json()
+        );
+      }),
+      map((value) => JSON.stringify(value))
+    );
+    return { payload };
   },
 });

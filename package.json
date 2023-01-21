@@ -1,13 +1,15 @@
 {
   "name": "tybalt-itscalledsoccer",
   "version": "0.0.1",
-  "description": "This project was bootstrapped with Fastify-CLI.",
+  "description": "n example of how to use itscalledsoccer with tybalt",
   "main": "app.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "build": "tybalt build components",
+    "build": "tybalt build ./components/index.ts -o public",
+    "clean": "rimraf ./public/index.js",
+    "clean-build": "yarn run clean && yarn run build",
     "test": "tap \"test/**/*.test.js\"",
     "start": "fastify start -l info app.js",
     "dev": "fastify start -w -l info -P app.js"
@@ -30,6 +32,7 @@
   },
   "devDependencies": {
     "fastify-static": "^4.7.0",
-    "tap": "^16.1.0"
+    "tap": "^16.1.0",
+    "rimraf": "^4.1.1"
   }
 }

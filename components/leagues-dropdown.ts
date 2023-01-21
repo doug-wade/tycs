@@ -1,5 +1,5 @@
 import { defineComponent, html } from "@tybalt/core";
-import { from } from "rxjs";
+import { of } from "rxjs";
 
 defineComponent({
   name: "tycs-leagues-dropdown",
@@ -9,7 +9,7 @@ defineComponent({
   },
   setup() {
     return {
-      leagues: from(fetch("/api/leagues")),
+      leagues: of("mls", "nwsl", "uslc", "usl1", "mlsnp", "nasl"),
     };
   },
 });

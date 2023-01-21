@@ -58,7 +58,7 @@ profile*
 *flamegraph*
 
 # tybalt build
-dist/
+public/index.js
 
 # npm tools
 package-lock.json

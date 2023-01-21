@@ -1,18 +1,26 @@
-const fastify = require("fastify")({ logger: true });
-const path = require("node:path");
+"use strict";
 
-fastify.register(require("@fastify/static"), {
-  root: path.join(__dirname, "public"),
-  prefix: "/public/",
-});
+const path = require("path");
+const AutoLoad = require("@fastify/autoload");
+const staticPlugin = require("@fastify/static");
 
-const start = async () => {
-  try {
-    await fastify.listen({ port: 3000 });
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
+// Pass --options via CLI arguments in command to enable these options.
+module.exports.options = {};
+
+module.exports = async function (fastify, opts) {
+  // Place here your custom code!
+
+  fastify.register(staticPlugin, {
+    root: path.join(__dirname, "public"),
+    prefix: "/public/", // optional: default '/'
+  });
+
+  // Do not touch the following lines
+
+  // This loads all plugins defined in routes
+  // define your routes in one of these
+  fastify.register(AutoLoad, {
+    dir: path.join(__dirname, "routes"),
+    options: Object.assign({}, opts),
+  });
 };
-
-start();
